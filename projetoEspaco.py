@@ -91,7 +91,26 @@ try:
 except FileNotFoundError:
     #se o arquivo de salvar não existir inicia um diconario vazio
     star_points = {}
-           
+# loop principal do jogo
+while running:
+    for event in pg.event.get():
+        # Se o usuario fechar salva os dados e encerra o codigo
+        if event.type == pg.QUIT or (event.type == pg.KEYDOWN and event.Key == pg.K_ESCAPE):
+            save_data(star_points)
+            renning = False
+        
+        #se o usuario clicar com o mouse add um ponto
+        elif event.type == pg.MOUSEBUTTONDOWN:
+            if tela.get_rect().collidepoint(event.pos):
+                if event.butto == 1:
+                    # cria uma janela inviseivel para a caixa de diálogo
+                    root = tk.Tk()
+                    root.withdraw()
+
+                    # Solicita o usuario o nomeda estrela
+                    star_name = simpledialog.askfloat(
+                        "Star name", "Enter the name of the star: ")
+
     tela.blit(fundo, (0, 0))
 
     pg.display.update()
