@@ -178,6 +178,28 @@ while running:
             f"Length: {int(line_length)} px", True, (255, 0, 0))
         distance_to_line = (mouse_x, mouse_y)
         break
+
+
+    for name, point in star_points.items():
+        # Obtem a cordenada do marcador
+        marker_x, marker_y = point
+        # Cria um retangulo para o marcador com o centro nas mesmas cordenadas
+        marker_rect = marcador.get_rect(center=(marker_x,marker_y - 9))
+        # Desenah o marcador na tela
+        tela.blit(marcador, marker_rect)
+
+        # Cria uma superficie de texto com o nome da estrela
+        text_surface = font.render(name, True (255, 255, 255))
+        # Desenah o nome da estrela
+        tela.blit(text_surface, (marker_x - 15, marker_y -  38))
+
+    # Itera sobre os pares de pontos das estrelas
+    for i, (name1, point1) in enumerate(list(star_points.items())[:-1]):
+        #obtem o proximo ponto da lista
+        name2, point2 = list(star_points.items())[i+1]
+        # Desenha uma linha entre os dois pontos
+        pg.draw.line(tela, (255, 255, 255), point1, point2)
+
             
 
     pg.display.update()
