@@ -110,6 +110,25 @@ while running:
                     # Solicita o usuario o nomeda estrela
                     star_name = simpledialog.askfloat(
                         "Star name", "Enter the name of the star: ")
+                    # Se o usuario inserir o nome da estrela adiciona um ponto
+                    if star_name:
+                        mouse_x, mouse_y = event.pos
+                        star_name[star_name] = (mouse_x, mouse_y)
+                # Se o clique foi com o botao direito 
+                elif event.button == 3:
+                    mouse_x, mouse_y = event.pos
+                    mouse_vector = pg.math.Vector2(mouse_x, mouse_y)
+
+                    #verifica se o foi em algum marcador
+                    for name, point in star_points.items():
+                        marker_x, marker_y = point
+                        marker_vector = pg.math.Vector2(marker_x, marker_y)
+                        distance = mouse_vector.distance_to(marker_vector)
+                        #se o clique foi em um marcador, removera o mesmo
+                        if distance < 30:
+                            del star_points[name]
+                            break
+                     
 
     tela.blit(fundo, (0, 0))
 
