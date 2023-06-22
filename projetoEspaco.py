@@ -128,9 +128,23 @@ while running:
                         if distance < 30:
                             del star_points[name]
                             break
-                     
+
+        elif event.type == pg.KEYDOWN:
+            # Se a tecla foi f10 limpa todos marcadores tudo
+            if event.key == pg.K_F10:
+                star_points.clear()
+            # Se precionar F11, salva todos os marcadores
+            elif event.key == pg.KF11:
+                save_data(star_points)
+            # Se ainda não existe um save ele inicia um dicionario vazio
+            elif event.key == pg.k_f12:
+                try:
+                    star_points = load_data()
+                except FileExistsError:
+                    star_points = {}
 
     tela.blit(fundo, (0, 0))
+
 
     pg.display.update()
     clock.tick(60)
