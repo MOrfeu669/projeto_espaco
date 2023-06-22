@@ -24,6 +24,10 @@ font = pg.font.Font(None, 24)
 # variavel para controlar o loop principal
 running = True
 
+# Define a fonte para o rotulo de distancia
+distance_label_font = pg.font.Font(None, 30)
+distance_label = None
+
 # Função para salvar os pontos das estrelas
 def save_data(star_points, folder='save_data'):
   # Cria o diretório se ele não existir
@@ -144,7 +148,37 @@ while running:
                     star_points = {}
 
     tela.blit(fundo, (0, 0))
+    # Reseta o rotulo de distanci
+    distance_label = None
+    #obtem a posicao do mouse 
+    mouse_x, mouse_y = pg.mouse.get_pos()
+    mouse_vector = pg.math.Vector2(mouse_x, mouse_y)
+    # Navega sobre os pares de pontos das estrelas
+    for i, (name1, point1) in enumerate(list(star_name.items())[:-1]):
+        name2, point2 = list(star_points.items())[i+1]
 
+        # Calcula a distancia do mouse até a nilha entre os dois pontos
+        line_start = pg.math.Vector2(point1)
+        line_end = pg.math.Vector2(point2)
+
+        # A distancia da linha for menor que 30
+        line_vector = line_end - line_end
+        t = max(0, min(1, (mouse_vector - line_start).dot(line_vector) / 
+                       line_vector.length_squared()))
+        projection = line_start + t * line_vector
+        distance_to_line = mouse_vector.distance_to(projection)
+
+        if distance_label < 30:
+            # Calcula o comprimento da linha
+            line_length = math.sqrt (
+                line_end.x - line_start.x) ** 2 + (line_end.y - line_start.y) ** 2
+            
+        # Cria um rotulo com o comprimento da linha
+        distance_label = distance_label_font.render(
+            f"Length: {int(line_length)} px", True, (255, 0, 0))
+        distance_to_line = (mouse_x, mouse_y)
+        break
+            
 
     pg.display.update()
     clock.tick(60)
