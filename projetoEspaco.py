@@ -7,6 +7,7 @@ import os
 # Inicializando o pygame e o mixer do pygame
 pg.init()
 pg.mixer.init()
+pg.display.set_icon("wapoint.png")
 tamanho = (1600, 1000)
 tela = pg.display.set_mode(tamanho)
 fundo = pg.image.load("bg.jpg")
